@@ -1,0 +1,29 @@
+# DevFlow standards
+
+SvelteKit 3, Svelte 5, TypeScript `strict`, Tailwind CSS 4 (`@tailwindcss/vite`), Vitest, and Playwright. Inspect the relevant code before editing, and reuse existing patterns and dependencies.
+
+## Code
+
+- Use Svelte 5 runes and `lang="ts"`. Props come from `$props()`; render snippets with `{@render ...}`.
+- Import shared modules through `#lib` and include the extension: `import { x } from '#lib/foo.js'`.
+- Keep components small, accessible, and reusable. Use semantic elements and label form controls.
+- Style only through the current Tailwind setup: `@import 'tailwindcss'` in `src/routes/layout.css`, loaded by `src/routes/+layout.svelte`.
+- Respect SSR. Keep server-only modules out of client components. Use load functions, form actions, and `+server` endpoints for server work, and touch browser APIs only in browser code.
+- For a significant feature, follow the approved specification and acceptance criteria.
+- Add tests for business logic and UI behavior. Unit logic uses `*.spec.ts`. Svelte components use `*.svelte.spec.ts`. Browser flows use `*.e2e.ts`. Report only commands that were run and their real results.
+
+## Checks
+
+- `npm run check` — `svelte-check`
+- `npm run build` — production build
+- `npm run test:unit` — Vitest watch; one shot is `npm run test:unit -- --run`
+- `npm run test:e2e` — installs Playwright browsers, then runs end-to-end tests
+- `npm run test` — unit tests once, then end-to-end tests
+
+No lint or format script is defined.
+
+## Boundaries
+
+- Do not commit, push, merge, deploy, delete files, or install dependencies without explicit approval.
+- Never expose secrets or credentials.
+- After implementation, summarize changed files, checks, and remaining risks.
