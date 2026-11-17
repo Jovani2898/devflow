@@ -1,8 +1,8 @@
 # DevFlow
 
-DevFlow is a project-management application in its foundation stage. The product will provide Kanban boards, task management, priorities, filters, and analytics.
+DevFlow is a project-management application in development. The product is planned to provide Kanban boards, task management, priorities, filters, and analytics.
 
-The repository today is the SvelteKit application shell, test tooling, and written instructions for AI agents. Boards, tasks, and analytics are not implemented. There is no public deployment and no live demo.
+The repository today is the SvelteKit application shell, test tooling, and a written spec-driven workflow for Cursor and Claude Code. The first feature, task management and a Kanban board, has an approved specification, plan, and task list. Its product code is not written. Analytics is not specified. There is no public deployment and no live demo.
 
 ## Status
 
@@ -10,9 +10,10 @@ The repository today is the SvelteKit application shell, test tooling, and writt
 | --- | --- |
 | SvelteKit application shell, TypeScript, Tailwind CSS, Vitest, Playwright | Done |
 | Cursor and Claude Code instruction files | Done |
-| Spec-driven workflow documented | Done, on paper |
-| [GitHub Spec Kit](https://github.com/github/spec-kit) | Not installed |
-| Kanban boards, tasks, priorities, filters, analytics | Not started |
+| [DevFlow Constitution](.specify/memory/constitution.md) v1.0.0 | Ratified |
+| Spec Kit templates, scripts, and Cursor skills | Present in the repo |
+| Task management and Kanban board | Specified and planned. In development. No product code yet. |
+| Analytics | Not specified |
 | Screenshots and live demo | Not available |
 
 ## Product vision
@@ -25,7 +26,7 @@ DevFlow is planned as a focused board for day-to-day project work:
 - **Filters** for narrowing a board by status, priority, and related fields.
 - **Analytics** for a simple view of where work is accumulating.
 
-These capabilities still need approved specifications. Nothing in `src/routes` implements them. The home page is the SvelteKit starter page.
+Task management and the Kanban board have an approved specification. Analytics does not. Nothing in `src/routes` implements product behavior. The home page is the SvelteKit starter page.
 
 ## Technology stack
 
@@ -54,29 +55,48 @@ src/routes/layout.css            Tailwind entry
 src/routes/page.svelte.e2e.ts    Playwright smoke test for the starter page
 src/lib/                         Shared modules, imported as #lib
 src/lib/vitest-examples/         CLI sample tests, not product behavior
-docs/ai-development/WORKFLOW.md  Planned AI development workflow
+docs/ai-development/WORKFLOW.md  AI development workflow used so far
+.specify/memory/constitution.md  Constitution v1.0.0
 .cursor/rules/project-standards.mdc
+.cursor/skills/                   Spec Kit skills for Cursor
 CLAUDE.md
+specs/001-task-kanban-board/      First feature spec, plan, and tasks
 ```
 
 ## AI-assisted engineering
 
-Feature work is planned as spec-driven development. A human approves a specification and its acceptance criteria before an agent implements a significant feature. Cursor and Claude Code then follow the same written standards.
+Feature work follows a written spec-driven sequence. A person approves the specification and acceptance criteria before an agent implements a significant feature. Cursor and Claude Code use the same engineering standards. The sequence has been used to specify and plan the first feature. It has not been used to implement that feature, and it does not approve or merge changes by itself.
 
 | Tool | Instruction file | What it does today |
 | --- | --- | --- |
 | Cursor | [`.cursor/rules/project-standards.mdc`](.cursor/rules/project-standards.mdc) | Always-on project rule (`alwaysApply: true`) |
 | Claude Code | [`CLAUDE.md`](CLAUDE.md) | Root project instructions. Same standards as the Cursor rule. |
-| Spec Kit | Not in this repository | Planned tool for specifications, plans, and tasks |
+| Spec Kit | [`.specify/`](.specify/) and [`.cursor/skills/`](.cursor/skills/) | Templates, Constitution, and skills for specify, plan, tasks, analyze, and implement |
 
 The process, review gate, and verification commands are in [docs/ai-development/WORKFLOW.md](docs/ai-development/WORKFLOW.md).
 
+### Documents for the first feature
+
+Task management and the Kanban board are specified. Implementation has not started.
+
+| Document | Path |
+| --- | --- |
+| Constitution v1.0.0 | [`.specify/memory/constitution.md`](.specify/memory/constitution.md) |
+| Specification | [`specs/001-task-kanban-board/spec.md`](specs/001-task-kanban-board/spec.md) |
+| Requirements checklist | [`specs/001-task-kanban-board/checklists/requirements.md`](specs/001-task-kanban-board/checklists/requirements.md) |
+| Implementation plan | [`specs/001-task-kanban-board/plan.md`](specs/001-task-kanban-board/plan.md) |
+| Research and decisions | [`specs/001-task-kanban-board/research.md`](specs/001-task-kanban-board/research.md) |
+| Data model | [`specs/001-task-kanban-board/data-model.md`](specs/001-task-kanban-board/data-model.md) |
+| Persistence contract | [`specs/001-task-kanban-board/contracts/persistence.md`](specs/001-task-kanban-board/contracts/persistence.md) |
+| UI contract | [`specs/001-task-kanban-board/contracts/board-ui.md`](specs/001-task-kanban-board/contracts/board-ui.md) |
+| Validation guide | [`specs/001-task-kanban-board/quickstart.md`](specs/001-task-kanban-board/quickstart.md) |
+| Implementation tasks | [`specs/001-task-kanban-board/tasks.md`](specs/001-task-kanban-board/tasks.md) |
+
 These are not set up:
 
-- Spec Kit templates or commands
 - MCP servers
-- Custom agent skills
 - Automated review bots
+- Product code for the board
 
 ## Human review
 
@@ -114,11 +134,11 @@ The current automated tests are scaffold samples: a `greet` unit test, a `Welcom
 
 ## Roadmap
 
-1. **Foundation.** Application shell, TypeScript, Tailwind CSS, Vitest, Playwright, and agent instruction files.
-2. **Spec workflow.** Add Spec Kit and write the first approved specifications. Not started.
-3. **Board core.** Kanban boards, tasks, priorities, and filters, each behind an approved spec and tests.
-4. **Analytics.** A small reporting view of board activity, after the board data exists.
-5. **Portfolio evidence.** Screenshots and a live demo after the product UI exists.
+1. **Foundation.** Application shell, TypeScript, Tailwind CSS, Vitest, Playwright, Constitution, and agent instruction files. Done.
+2. **Spec workflow.** Spec Kit templates and skills are in the repo. The first feature has a specification, plan, and task list. Analyze and implement have not been run.
+3. **Board core.** Task management, the Kanban board, priorities, and filters. In development: the specification is approved, and the product code is not written.
+4. **Analytics.** A small reporting view of board activity. Not specified. It waits until the board data exists.
+5. **Portfolio evidence.** Screenshots and a live demo after the product UI exists. Not available.
 
 ## Screenshots
 
