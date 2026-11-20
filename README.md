@@ -1,8 +1,6 @@
 # DevFlow
 
-DevFlow is a project-management application in development. The product is planned to provide Kanban boards, task management, priorities, filters, and analytics.
-
-The repository today is the SvelteKit application shell, test tooling, and a written spec-driven workflow for Cursor and Claude Code. The first feature, task management and a Kanban board, has an approved specification, plan, and task list. Its product code is not written. Analytics is not specified. There is no public deployment and no live demo.
+DevFlow is a project-management application in development. The first feature, task management and a Kanban board, is implemented as a single board stored in this browser. Analytics is not specified. There is no public deployment and no live demo.
 
 ## Status
 
@@ -12,21 +10,44 @@ The repository today is the SvelteKit application shell, test tooling, and a wri
 | Cursor and Claude Code instruction files | Done |
 | [DevFlow Constitution](.specify/memory/constitution.md) v1.0.0 | Ratified |
 | Spec Kit templates, scripts, and Cursor skills | Present in the repo |
-| Task management and Kanban board | Specified and planned. In development. No product code yet. |
+| Task management and Kanban board | Implemented for the approved MVP |
 | Analytics | Not specified |
-| Screenshots and live demo | Not available |
+| Public deployment | Not deployed |
 
-## Product vision
+## What the board does
 
-DevFlow is planned as a focused board for day-to-day project work:
+The home page is one board for the tasks saved in this browser.
 
-- **Kanban boards** for moving work across columns.
-- **Tasks** with a clear title, description, and status.
-- **Priorities** so the next piece of work is obvious.
-- **Filters** for narrowing a board by status, priority, and related fields.
-- **Analytics** for a simple view of where work is accumulating.
+- Create a task with a title, an optional description, a priority of Low, Medium, or High, and a status of To Do, In Progress, or Done.
+- See tasks in those three columns. A card shows the title and priority. Opening a task shows the description.
+- Edit a task, or leave the edit without saving.
+- Move a task with the status control on its card, by keyboard or pointer.
+- Delete a task only after confirmation. Cancel leaves it in place.
+- Filter by any combination of statuses, including none, and by one priority: All, Low, Medium, or High.
+- Keep saved tasks after a refresh. A refresh selects all three statuses and priority All. Unsaved form text is discarded.
 
-Task management and the Kanban board have an approved specification. Analytics does not. Nothing in `src/routes` implements product behavior. The home page is the SvelteKit starter page.
+A title is required and is at most 200 characters after trimming. A description is optional and is at most 5,000 characters after trimming. Duplicate titles are allowed. The newest task in a column appears first. A status change places that task first in the destination column. An edit that keeps the same status leaves its position unchanged.
+
+## MVP limits
+
+- There is one board. There is no project list, second board, or board switcher.
+- Anyone using this browser sees the same tasks. There is no sign-in, account, role, or sharing control.
+- Tasks are stored in `localStorage` under `devflow.board.v1`. Another browser or device does not show them.
+- A second view in this browser sees a newly saved task after that view is refreshed.
+- Moving a task uses the status select. There is no drag-and-drop.
+- Corrupt saved data shows "Tasks could not be loaded" and is left unchanged. There is no repair action.
+- Analytics is not part of this feature.
+- The app is not deployed. `@sveltejs/adapter-auto` has no selected host.
+
+Two success criteria are not claimed as passed. SC-001, creating a task in under one minute, has no timed run. SC-009, the moderated first-use study, has not been run.
+
+## Screenshots
+
+Desktop at 1280×800, then a narrow view at 390×844. Both were captured from the local board in Chromium.
+
+![DevFlow board on a desktop viewport](docs/images/001-board-desktop.png)
+
+![DevFlow board on a narrow viewport](docs/images/001-board-mobile.png)
 
 ## Technology stack
 
@@ -49,35 +70,37 @@ Versions below are the ones installed in `package-lock.json`. `package.json` dec
 ## Repository layout
 
 ```text
-src/routes/+page.svelte          Starter page
+src/routes/+page.svelte          Board page
 src/routes/+layout.svelte        Root layout
 src/routes/layout.css            Tailwind entry
-src/routes/page.svelte.e2e.ts    Playwright smoke test for the starter page
-src/lib/                         Shared modules, imported as #lib
+src/routes/board.e2e.ts          Playwright coverage for the board
+src/routes/page.svelte.e2e.ts    Playwright check for the Board heading
+src/lib/tasks/                   Domain, storage, board state, and UI
 src/lib/vitest-examples/         CLI sample tests, not product behavior
-docs/ai-development/WORKFLOW.md  AI development workflow used so far
+docs/ai-development/WORKFLOW.md  AI development workflow
+docs/ai-development/reviews/     Independent review record
 .specify/memory/constitution.md  Constitution v1.0.0
 .cursor/rules/project-standards.mdc
 .cursor/skills/                   Spec Kit skills for Cursor
 CLAUDE.md
-specs/001-task-kanban-board/      First feature spec, plan, and tasks
+specs/001-task-kanban-board/     First feature spec, plan, and tasks
 ```
 
 ## AI-assisted engineering
 
-Feature work follows a written spec-driven sequence. A person approves the specification and acceptance criteria before an agent implements a significant feature. Cursor and Claude Code use the same engineering standards. The sequence has been used to specify and plan the first feature. It has not been used to implement that feature, and it does not approve or merge changes by itself.
+Feature 001 was built with Spec Kit. Cursor implemented the approved task list in the existing SvelteKit application. Claude Code then performed an independent read-only review of that uncommitted implementation. The confirmed delete defect, and the status-select defect found by reproducing the suspected move failure, were fixed with regression tests. A Spec Kit convergence pass compared the result with the specification, plan, and tasks and found no remaining feature gap.
 
-| Tool | Instruction file | What it does today |
+The review record is [docs/ai-development/reviews/001-task-board-review.md](docs/ai-development/reviews/001-task-board-review.md). The process is [docs/ai-development/WORKFLOW.md](docs/ai-development/WORKFLOW.md).
+
+| Tool | Instruction file | Role on this feature |
 | --- | --- | --- |
-| Cursor | [`.cursor/rules/project-standards.mdc`](.cursor/rules/project-standards.mdc) | Always-on project rule (`alwaysApply: true`) |
-| Claude Code | [`CLAUDE.md`](CLAUDE.md) | Root project instructions. Same standards as the Cursor rule. |
-| Spec Kit | [`.specify/`](.specify/) and [`.cursor/skills/`](.cursor/skills/) | Templates, Constitution, and skills for specify, plan, tasks, analyze, and implement |
+| Cursor | [`.cursor/rules/project-standards.mdc`](.cursor/rules/project-standards.mdc) | Implemented the board from the approved tasks |
+| Claude Code | [`CLAUDE.md`](CLAUDE.md) | Independent read-only review against the same standards |
+| Spec Kit | [`.specify/`](.specify/) and [`.cursor/skills/`](.cursor/skills/) | Specify, plan, tasks, analyze, implement, and converge |
 
-The process, review gate, and verification commands are in [docs/ai-development/WORKFLOW.md](docs/ai-development/WORKFLOW.md).
+No MCP servers or automated review bots are configured. The agent workflow does not approve or merge changes by itself.
 
 ### Documents for the first feature
-
-Task management and the Kanban board are specified. Implementation has not started.
 
 | Document | Path |
 | --- | --- |
@@ -91,12 +114,7 @@ Task management and the Kanban board are specified. Implementation has not start
 | UI contract | [`specs/001-task-kanban-board/contracts/board-ui.md`](specs/001-task-kanban-board/contracts/board-ui.md) |
 | Validation guide | [`specs/001-task-kanban-board/quickstart.md`](specs/001-task-kanban-board/quickstart.md) |
 | Implementation tasks | [`specs/001-task-kanban-board/tasks.md`](specs/001-task-kanban-board/tasks.md) |
-
-These are not set up:
-
-- MCP servers
-- Automated review bots
-- Product code for the board
+| Independent review | [`docs/ai-development/reviews/001-task-board-review.md`](docs/ai-development/reviews/001-task-board-review.md) |
 
 ## Human review
 
@@ -130,19 +148,15 @@ npm install
 
 `npm run test:unit` stays open because the script is `vitest` with no `--run` flag. The first `npm run test:e2e` downloads Playwright browsers. `npm run prepare` runs `svelte-kit sync` on install.
 
-The current automated tests are scaffold samples: a `greet` unit test, a `Welcome` component test, and a Playwright check that the starter page has a visible `h1`. They do not cover product behavior.
+Product behavior is covered by Vitest specs under `src/lib/tasks/` and by `src/routes/board.e2e.ts`. The files in `src/lib/vitest-examples/` remain the original CLI samples.
 
 ## Roadmap
 
 1. **Foundation.** Application shell, TypeScript, Tailwind CSS, Vitest, Playwright, Constitution, and agent instruction files. Done.
-2. **Spec workflow.** Spec Kit templates and skills are in the repo. The first feature has a specification, plan, and task list. Analyze and implement have not been run.
-3. **Board core.** Task management, the Kanban board, priorities, and filters. In development: the specification is approved, and the product code is not written.
-4. **Analytics.** A small reporting view of board activity. Not specified. It waits until the board data exists.
-5. **Portfolio evidence.** Screenshots and a live demo after the product UI exists. Not available.
-
-## Screenshots
-
-Screenshots will be added here after the board UI exists. The running page is still the SvelteKit starter.
+2. **Spec workflow.** Specify, plan, tasks, analyze, implement, and converge have been run for feature 001.
+3. **Board core.** Task management, the Kanban board, priorities, and filters. Implemented for the approved MVP.
+4. **Analytics.** A small reporting view of board activity. Not specified.
+5. **Portfolio evidence.** Screenshots of the local board are in this file. A live demo waits until a host is chosen. The app is not deployed.
 
 ## Live demo
 

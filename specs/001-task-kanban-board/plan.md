@@ -92,7 +92,9 @@ src/lib/tasks/
     ├── TaskForm.svelte.spec.ts
     ├── TaskColumn.svelte
     ├── TaskCard.svelte               # Title, priority, status select, edit, delete
-    └── DeleteDialog.svelte
+    ├── TaskCard.svelte.spec.ts
+    ├── DeleteDialog.svelte
+    └── DeleteDialog.svelte.spec.ts
 
 src/routes/
 ├── +layout.svelte                    # Unchanged shell; still loads layout.css
@@ -112,7 +114,7 @@ Four layers, in one direction:
 1. **Domain** (`domain.ts`) accepts and returns data. It trims and validates, creates and updates task records, moves and deletes by id, chooses visible statuses in To Do → In Progress → Done order, filters tasks, and sorts a column. It does not import Svelte, the DOM, or storage.
 2. **Persistence** (`storage.ts`) parses and writes the versioned document in [contracts/persistence.md](./contracts/persistence.md). Callers pass `localStorage` or a test double. A missing key is an empty board. Invalid JSON, an unknown version, or a task that fails the domain parser is a load error. The module does not replace that stored value.
 3. **State** (`board.svelte.ts`) owns the loaded tasks, the loading phase, the status selection, the priority filter, the form draft, the save error, and the pending delete id. It calls domain functions to decide the next tasks, then storage to commit them. It assigns rune state only after a successful save. Filter changes do not call storage.
-4. **UI** renders the contract in [contracts/board-ui.md](./contracts/board-ui.md). Components receive props and callback props. They do not validate length, choose order, or call `localStorage`.
+4. **UI** renders the contract in [contracts/board-ui.md](./contracts/board-ui.md). Components receive props and callback props. They do not choose column order or call `localStorage`. The create and edit form calls `validateFields` from the domain so an invalid field shows its message without forwarding the save. The length limits remain in the domain, and the board validates again before it commits.
 
 The page calls `init()` from a client `$effect`. The server render, and the first client paint before that effect, show a loading status named "Loading tasks". That status is not ES-001 and not ES-005. After `init()`, the phase is `ready` or `load-error`.
 

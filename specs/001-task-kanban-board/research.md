@@ -67,7 +67,7 @@ Decisions for feature `001-task-kanban-board`. The approved product behavior sta
 
 ## Corrupt data and save failure
 
-**Decision**: `loadBoard` returns a result. A missing key returns an empty task list. Unreadable or schema-invalid data returns `corrupt` and performs no write. `saveBoard` catches storage exceptions and returns a failure. The rune module keeps the previous task list and the current form values when save fails, and it shows "The task could not be saved." A failed load shows "Tasks could not be loaded" (ES-005) and does not show ES-001 or ES-003.
+**Decision**: `loadBoard` returns a result. A missing key returns an empty task list. Unreadable or schema-invalid data returns `corrupt` and performs no write. `saveBoard` catches storage exceptions and returns a failure. The rune module keeps the previous task list and the current form values when save fails, and it shows "The task could not be saved". A failed load shows "Tasks could not be loaded" (ES-005) and does not show ES-001 or ES-003.
 
 **Rationale**: AC-013 and AC-014 require those outcomes. Overwriting corrupt data with an empty document would look like the user deleted every task. Saving into rune state before `setItem` succeeds would show a task that the next refresh cannot find.
 

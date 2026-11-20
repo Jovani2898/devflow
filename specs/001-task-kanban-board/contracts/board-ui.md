@@ -55,7 +55,7 @@ Buttons: `Save` and `Cancel`. Cancel closes the form and leaves stored tasks unc
 
 Modal dialog. Its name includes the task title. The dialog text includes that same title. Buttons: `Confirm delete` and `Cancel`. Cancel and the platform Escape action close the dialog and leave every task in place. Confirm removes that task only. If it was the last saved task, the board shows `No tasks yet`, all status checkboxes are checked, and priority `All` is selected.
 
-A confirm or save aimed at an id that is already gone shows `The task is no longer available` and does not change the remaining tasks.
+A confirm or save aimed at an id that is already gone shows `The task is no longer available.` and does not change the remaining tasks.
 
 ## Empty and error copy
 

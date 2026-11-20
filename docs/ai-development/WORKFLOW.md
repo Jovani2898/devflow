@@ -1,8 +1,8 @@
 # AI-assisted development workflow
 
-This is the way DevFlow is being built with Cursor and Claude Code. It describes the gate a person keeps on AI-written changes.
+This is the way DevFlow is built with Cursor and Claude Code. It describes the gate a person keeps on AI-written changes, and how far feature `001-task-kanban-board` has gone.
 
-Spec Kit templates, scripts, and Cursor skills live in [`.specify/`](../../.specify/) and [`.cursor/skills/`](../../.cursor/skills/). They produce specification files. They do not implement product code, review pull requests, or merge changes. This repository has no MCP servers and no automated review bot.
+Spec Kit templates, scripts, and Cursor skills live in [`.specify/`](../../.specify/) and [`.cursor/skills/`](../../.cursor/skills/). They produce and check specification files, and the implement skill edits code from `tasks.md`. They do not review pull requests or merge changes. This repository has no MCP servers and no automated review bot.
 
 ## Instruction files
 
@@ -18,17 +18,20 @@ Both files require Svelte 5 runes, TypeScript `strict`, the existing Tailwind CS
 
 ## Spec-driven flow
 
-A significant feature follows this order. The links show how far feature `001-task-kanban-board` has gone. Analyze and implement have not been run, and no board code exists.
+A significant feature follows this order. Feature `001-task-kanban-board` has completed it through convergence.
 
-1. **Specify.** A person writes the behavior, constraints, and acceptance criteria, or approves a draft. The spec names what will not be built in that change. Done for the first feature: [`specs/001-task-kanban-board/spec.md`](../../specs/001-task-kanban-board/spec.md). The requirements checklist is [`checklists/requirements.md`](../../specs/001-task-kanban-board/checklists/requirements.md).
-2. **Plan.** The change is broken into an implementation plan that reuses the current SvelteKit routes, `#lib`, Tailwind setup, Vitest projects, and Playwright config. Done for the first feature: [`plan.md`](../../specs/001-task-kanban-board/plan.md), [`research.md`](../../specs/001-task-kanban-board/research.md), [`data-model.md`](../../specs/001-task-kanban-board/data-model.md), [`contracts/`](../../specs/001-task-kanban-board/contracts/), and [`quickstart.md`](../../specs/001-task-kanban-board/quickstart.md).
-3. **Tasks.** The plan is split into dependency-ordered tasks. Done for the first feature: [`tasks.md`](../../specs/001-task-kanban-board/tasks.md).
-4. **Analyze.** The spec, plan, and tasks are checked against each other before implementation. Not run for the first feature.
-5. **Implement.** Cursor or Claude Code reads the relevant files first, then edits only the approved scope. The agent uses dependencies already declared in `package.json`. Not started. The home page is still the SvelteKit starter.
-6. **Verify.** The agent runs the checks that match the change and reports the real command output. See the commands below.
-7. **Review.** A person reads the diff against the acceptance criteria, reruns the checks, and decides whether the change is accepted.
+1. **Specify.** A person writes the behavior, constraints, and acceptance criteria, or approves a draft. The spec names what will not be built in that change. Done: [`specs/001-task-kanban-board/spec.md`](../../specs/001-task-kanban-board/spec.md). The requirements checklist is [`checklists/requirements.md`](../../specs/001-task-kanban-board/checklists/requirements.md). Approved product decisions: one shared browser collection with no accounts, exactly one board, and a status filter that can select any combination of columns.
+2. **Plan.** The change is broken into an implementation plan that reuses the current SvelteKit routes, `#lib`, Tailwind setup, Vitest projects, and Playwright config. Done: [`plan.md`](../../specs/001-task-kanban-board/plan.md), [`research.md`](../../specs/001-task-kanban-board/research.md), [`data-model.md`](../../specs/001-task-kanban-board/data-model.md), [`contracts/`](../../specs/001-task-kanban-board/contracts/), and [`quickstart.md`](../../specs/001-task-kanban-board/quickstart.md).
+3. **Tasks.** The plan is split into dependency-ordered tasks. Done: [`tasks.md`](../../specs/001-task-kanban-board/tasks.md), T001 through T064.
+4. **Analyze.** The spec, plan, and tasks are checked against each other and Constitution v1.0.0 before implementation. Done. The findings that required task or plan text were applied before implementation. The intentional overlap of FR-012 and FR-013 was kept.
+5. **Implement.** Cursor read the approved tasks and implemented them in order: domain, storage, rune state, accessible UI, and Vitest and Playwright coverage. No new dependency was added. The board lives in `src/lib/tasks/` and `src/routes/+page.svelte`.
+6. **Verify.** The implementation run used `npm run check`, `npm run build`, `npm run test:unit -- --run`, and Playwright. A later publication run records its own command output separately. SC-001 has no timed measurement. SC-009 remains a manual study and has not been run.
+7. **Independent review.** Claude Code reviewed the uncommitted implementation without editing it. The record is [`reviews/001-task-board-review.md`](reviews/001-task-board-review.md). Two defects were confirmed: a failed delete hid the save error behind the dialog, and a failed move could leave the status select on an unsaved value.
+8. **Fix.** The delete dialog now shows the save error and keeps the task for another attempt. The status select returns to the saved status when the move is not stored. Regression tests cover both failures and the storage exceptions used to reproduce them.
+9. **Converge.** Spec Kit compared the code with the specification, plan, and tasks. No remaining feature task was appended. The plan note that said UI components do not validate length was later corrected, because the form calls the domain validator before it forwards a save.
+10. **Human review.** A person reads the diff against the acceptance criteria, reruns the checks, and decides whether the change is accepted. Publication to GitHub is a separate approval from implementation.
 
-Product work waits for this gate. Analytics has no specification. Task management and the Kanban board have a specification and no product code.
+Product work still waits for this gate. Analytics has no specification. The Kanban board is the implemented MVP described in the specification, and the app is not deployed.
 
 The human approval and verification steps stay in place. Spec Kit skills do not replace them.
 
@@ -59,7 +62,7 @@ These are the scripts in `package.json`. There is no lint or format script.
 
 `npm run test:unit` without `--run` starts Vitest in watch mode and does not exit on its own. `npm run dev` and `npm run preview` are for a person looking at the app. They are not substitutes for `npm run check` or the test scripts.
 
-The tests in the repository today are the Svelte CLI samples under `src/lib/vitest-examples/` and a smoke test in `src/routes/page.svelte.e2e.ts`. Passing them only shows that the shell and the test runner work.
+Product coverage lives in `src/lib/tasks/**/*.spec.ts` and `src/routes/board.e2e.ts`. The Svelte CLI samples under `src/lib/vitest-examples/` are still present and are not the board tests.
 
 ## Current boundaries
 

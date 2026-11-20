@@ -93,7 +93,7 @@ Messages shown to the user:
 | `description-too-long` | Description is too long |
 | load corrupt or unavailable | Tasks could not be loaded |
 | save failed | The task could not be saved |
-| missing id on edit or delete | The task is no longer available |
+| missing id on edit or delete | The task is no longer available. |
 
 ## Transitions
 

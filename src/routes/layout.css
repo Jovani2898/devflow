@@ -1,1 +1,14 @@
 @import 'tailwindcss';
+
+body {
+	@apply bg-slate-50 font-sans text-slate-900 antialiased;
+}
+
+dialog {
+	margin: auto;
+	color: inherit;
+}
+
+dialog::backdrop {
+	background: rgb(15 23 42 / 0.45);
+}

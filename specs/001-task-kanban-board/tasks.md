@@ -26,7 +26,7 @@
 
 **Purpose**: Add the module folders from the plan without changing the existing stack
 
-- [ ] T001 Create `src/lib/tasks/` and `src/lib/tasks/components/` from `specs/001-task-kanban-board/plan.md`, leaving `package.json`, `package-lock.json`, `vite.config.ts`, `tsconfig.json`, and `playwright.config.ts` unchanged
+- [x] T001 Create `src/lib/tasks/` and `src/lib/tasks/components/` from `specs/001-task-kanban-board/plan.md`, leaving `package.json`, `package-lock.json`, `vite.config.ts`, `tsconfig.json`, and `playwright.config.ts` unchanged
 
 ---
 
@@ -36,12 +36,12 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T002 [P] Write failing parser and validation tests in `src/lib/tasks/domain.spec.ts` for a trimmed title of length 1–200, rejection of a missing or whitespace-only title, rejection of a trimmed title longer than 200, a trimmed description of length 0–5000, rejection of a trimmed description longer than 5000, priority limited to `Low` \| `Medium` \| `High`, and status limited to `To Do` \| `In Progress` \| `Done`
-- [ ] T003 [P] Write failing persistence-contract tests in `src/lib/tasks/storage.spec.ts` for key `devflow.board.v1`: a missing key returns zero tasks, a version `1` document round-trips, and the document contains no filter or draft fields, using an in-memory Storage port from `specs/001-task-kanban-board/contracts/persistence.md`
-- [ ] T004 Implement the task type, `parseTask`, and validation in `src/lib/tasks/domain.ts` so T002 passes, with title trimmed to 1–200 characters, description trimmed to 0–5000 characters, priority `Low` \| `Medium` \| `High`, status `To Do` \| `In Progress` \| `Done`, a non-empty unique `id`, and an integer `placedAt`, and with no Svelte or `localStorage` import
-- [ ] T005 Implement `loadBoard` and `saveBoard` in `src/lib/tasks/storage.ts` so the T003 cases pass, reusing the domain parser, writing `{ "version": 1, "tasks": [] }` shape, and performing no write on load
-- [ ] T006 Implement the rune shell in `src/lib/tasks/board.svelte.ts` with phase `loading`, default selected statuses `To Do`, `In Progress`, and `Done`, priority filter `All`, and `init()` that calls storage only when the SvelteKit `browser` flag is true
-- [ ] T007 Render a status named `Loading tasks` from `src/routes/+page.svelte` until `init()` finishes, with no `localStorage` call in the route and no ES-001 or ES-005 copy during loading
+- [x] T002 [P] Write failing parser and validation tests in `src/lib/tasks/domain.spec.ts` for a trimmed title of length 1–200, rejection of a missing or whitespace-only title, rejection of a trimmed title longer than 200, a trimmed description of length 0–5000, rejection of a trimmed description longer than 5000, priority limited to `Low` \| `Medium` \| `High`, and status limited to `To Do` \| `In Progress` \| `Done`
+- [x] T003 [P] Write failing persistence-contract tests in `src/lib/tasks/storage.spec.ts` for key `devflow.board.v1`: a missing key returns zero tasks, a version `1` document round-trips, and the document contains no filter or draft fields, using an in-memory Storage port from `specs/001-task-kanban-board/contracts/persistence.md`
+- [x] T004 Implement the task type, `parseTask`, and validation in `src/lib/tasks/domain.ts` so T002 passes, with title trimmed to 1–200 characters, description trimmed to 0–5000 characters, priority `Low` \| `Medium` \| `High`, status `To Do` \| `In Progress` \| `Done`, a non-empty unique `id`, and an integer `placedAt`, and with no Svelte or `localStorage` import
+- [x] T005 Implement `loadBoard` and `saveBoard` in `src/lib/tasks/storage.ts` so the T003 cases pass, reusing the domain parser, writing `{ "version": 1, "tasks": [] }` shape, and performing no write on load
+- [x] T006 Implement the rune shell in `src/lib/tasks/board.svelte.ts` with phase `loading`, default selected statuses `To Do`, `In Progress`, and `Done`, priority filter `All`, and `init()` that calls storage only when the SvelteKit `browser` flag is true
+- [x] T007 Render a status named `Loading tasks` from `src/routes/+page.svelte` until `init()` finishes, with no `localStorage` call in the route and no ES-001 or ES-005 copy during loading
 
 **Checkpoint**: A browser load can read and write a valid board document, and the server render does not touch storage
 
@@ -57,19 +57,19 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T008 [P] [US1] Add failing `createTask` tests in `src/lib/tasks/domain.spec.ts` for AC-001: the stored record keeps the supplied `id`, trimmed title, description, priority, and status, duplicate titles are distinct, and an invalid title leaves the list unchanged
-- [ ] T009 [P] [US1] Add failing form tests in `src/lib/tasks/components/TaskForm.svelte.spec.ts` for AC-001 and AC-002: the create dialog is named `Create task`, Title and Description start empty, Priority starts at Medium, Status starts at To Do, and Save shows `Title is required`, `Title is too long`, or `Description is too long` without a success callback
-- [ ] T010 [P] [US1] Add failing board tests in `src/lib/tasks/components/TaskBoard.svelte.spec.ts` for AC-003 and AC-012: headings `To Do`, `In Progress`, and `Done` appear in that order, a task card shows its title and priority and not its description, an empty selected column says `No tasks`, and zero saved tasks says `No tasks yet`
+- [x] T008 [P] [US1] Add failing `createTask` tests in `src/lib/tasks/domain.spec.ts` for AC-001: the stored record keeps the supplied `id`, trimmed title, description, priority, and status, duplicate titles are distinct, and an invalid title leaves the list unchanged
+- [x] T009 [P] [US1] Add failing form tests in `src/lib/tasks/components/TaskForm.svelte.spec.ts` for AC-001 and AC-002: the create dialog is named `Create task`, Title and Description start empty, Priority starts at Medium, Status starts at To Do, and Save shows `Title is required`, `Title is too long`, or `Description is too long` without a success callback
+- [x] T010 [P] [US1] Add failing board tests in `src/lib/tasks/components/TaskBoard.svelte.spec.ts` for AC-003 and AC-012: headings `To Do`, `In Progress`, and `Done` appear in that order, a task card shows its title and priority and not its description, an empty selected column says `No tasks`, and zero saved tasks says `No tasks yet`
 
 ### Implementation for User Story 1
 
-- [ ] T011 [US1] Implement `createTask` and all-selected `visibleColumns` in `src/lib/tasks/domain.ts`, preserving title 1–200, description 0–5000, and the status order `To Do`, `In Progress`, `Done`
-- [ ] T012 [P] [US1] Add the create action to `src/lib/tasks/board.svelte.ts` so a valid task is committed only after `saveBoard` succeeds and an invalid task sets the field error without writing
-- [ ] T013 [P] [US1] Build the create dialog in `src/lib/tasks/components/TaskForm.svelte` with labeled Title, Description, Priority, and Status controls, plus `Save` and `Cancel`, using text bindings rather than HTML
-- [ ] T014 [P] [US1] Build `src/lib/tasks/components/TaskColumn.svelte` and `src/lib/tasks/components/TaskCard.svelte` so a column heading is the status name and a card shows title and priority only
-- [ ] T015 [US1] Compose empty states and columns in `src/lib/tasks/components/TaskBoard.svelte`, stacking columns vertically and placing them in a row from the `md` breakpoint upward with Tailwind utilities
-- [ ] T016 [US1] Wire create, cancel, and the board into `src/routes/+page.svelte` through `#lib/tasks/board.svelte.js` and `#lib/tasks/components/` callbacks, without validating or calling storage in the route
-- [ ] T017 [US1] Cover AC-001 and ES-001 in `src/routes/board.e2e.ts`: save `Write spec` with description `First task`, priority High, and status In Progress, and see it only in that column
+- [x] T011 [US1] Implement `createTask` and all-selected `visibleColumns` in `src/lib/tasks/domain.ts`, preserving title 1–200, description 0–5000, and the status order `To Do`, `In Progress`, `Done`
+- [x] T012 [P] [US1] Add the create action to `src/lib/tasks/board.svelte.ts` so a valid task is committed only after `saveBoard` succeeds and an invalid task sets the field error without writing
+- [x] T013 [P] [US1] Build the create dialog in `src/lib/tasks/components/TaskForm.svelte` with labeled Title, Description, Priority, and Status controls, plus `Save` and `Cancel`, using text bindings rather than HTML
+- [x] T014 [P] [US1] Build `src/lib/tasks/components/TaskColumn.svelte` and `src/lib/tasks/components/TaskCard.svelte` so a column heading is the status name and a card shows title and priority only
+- [x] T015 [US1] Compose empty states and columns in `src/lib/tasks/components/TaskBoard.svelte`, stacking columns vertically and placing them in a row from the `md` breakpoint upward with Tailwind utilities
+- [x] T016 [US1] Wire create, cancel, and the board into `src/routes/+page.svelte` through `#lib/tasks/board.svelte.js` and `#lib/tasks/components/` callbacks, without validating or calling storage in the route
+- [x] T017 [US1] Cover AC-001 and ES-001 in `src/routes/board.e2e.ts`: save `Write spec` with description `First task`, priority High, and status In Progress, and see it only in that column
 
 **Checkpoint**: User Story 1 can be demonstrated on its own by creating a task and finding it in the correct column
 
@@ -83,15 +83,15 @@
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T018 [P] [US2] Extend `src/lib/tasks/storage.spec.ts` with failing cases for AC-010, AC-013, and AC-014: corrupt JSON, version other than `1`, an invalid task, `getItem` throwing, and `setItem` throwing quota and non-quota errors, each leaving the previous stored string unchanged
-- [ ] T019 [P] [US2] Add failing component tests in `src/lib/tasks/components/TaskBoard.svelte.spec.ts` and `src/lib/tasks/components/TaskForm.svelte.spec.ts` that `Tasks could not be loaded` is distinct from `No tasks yet`, and that `The task could not be saved` leaves the typed title in the form
+- [x] T018 [P] [US2] Extend `src/lib/tasks/storage.spec.ts` with failing cases for AC-010, AC-013, and AC-014: corrupt JSON, version other than `1`, an invalid task, `getItem` throwing, and `setItem` throwing quota and non-quota errors, each leaving the previous stored string unchanged
+- [x] T019 [P] [US2] Add failing component tests in `src/lib/tasks/components/TaskBoard.svelte.spec.ts` and `src/lib/tasks/components/TaskForm.svelte.spec.ts` that `Tasks could not be loaded` is distinct from `No tasks yet`, and that `The task could not be saved` leaves the typed title in the form
 
 ### Implementation for User Story 2
 
-- [ ] T020 [US2] Complete the failure results in `src/lib/tasks/storage.ts`: invalid content returns `{ ok: false, reason: "corrupt" }`, a throwing `getItem` returns `{ ok: false, reason: "unavailable" }`, and a throwing `setItem` returns `quota` or `unavailable` without a second write
-- [ ] T021 [US2] Update `src/lib/tasks/board.svelte.ts` so a failed load sets phase `load-error` without writing, and a failed save keeps the previous task list and the open form values
-- [ ] T022 [US2] Show `Tasks could not be loaded` from `src/lib/tasks/components/TaskBoard.svelte` and `The task could not be saved` from `src/lib/tasks/components/TaskForm.svelte`, without using ES-001 or ES-003 copy for the load failure
-- [ ] T023 [US2] Extend `src/routes/board.e2e.ts` for AC-010, AC-011, AC-013, and AC-014: reload keeps saved tasks and resets filters to all statuses and priority All, a typed but unsaved title disappears on reload, key `{` shows the load error and stays stored, and a throwing `setItem` blocks the new task
+- [x] T020 [US2] Complete the failure results in `src/lib/tasks/storage.ts`: invalid content returns `{ ok: false, reason: "corrupt" }`, a throwing `getItem` returns `{ ok: false, reason: "unavailable" }`, and a throwing `setItem` returns `quota` or `unavailable` without a second write
+- [x] T021 [US2] Update `src/lib/tasks/board.svelte.ts` so a failed load sets phase `load-error` without writing, and a failed save keeps the previous task list and the open form values
+- [x] T022 [US2] Show `Tasks could not be loaded` from `src/lib/tasks/components/TaskBoard.svelte` and `The task could not be saved` from `src/lib/tasks/components/TaskForm.svelte`, without using ES-001 or ES-003 copy for the load failure
+- [x] T023 [US2] Extend `src/routes/board.e2e.ts` for AC-010, AC-011, AC-013, and AC-014: reload keeps saved tasks and resets filters to all statuses and priority All, a typed but unsaved title disappears on reload, key `{` shows the load error and stays stored, and a throwing `setItem` blocks the new task
 
 **Checkpoint**: Refresh, corrupt storage, and save failure match the persistence contract
 
@@ -105,13 +105,13 @@
 
 ### Tests for User Story 7 ⚠️
 
-- [ ] T024 [P] [US7] Add a failing test in `src/lib/tasks/components/TaskBoard.svelte.spec.ts` for AC-017 that the only heading level 1 available to the page contract is `Board` and that no control is named for sign-in, account, sharing, a project list, or a board switcher
-- [ ] T025 [P] [US7] Add a failing second-load test in `src/lib/tasks/storage.spec.ts` for AC-018 that two `loadBoard` calls on the same Storage port return the same tasks
+- [x] T024 [P] [US7] Add a failing test in `src/lib/tasks/components/TaskBoard.svelte.spec.ts` for AC-017 that the only heading level 1 available to the page contract is `Board` and that no control is named for sign-in, account, sharing, a project list, or a board switcher
+- [x] T025 [P] [US7] Add a failing second-load test in `src/lib/tasks/storage.spec.ts` for AC-018 that two `loadBoard` calls on the same Storage port return the same tasks
 
 ### Implementation for User Story 7
 
-- [ ] T026 [US7] Set the `h1` to `Board` in `src/routes/+page.svelte` and keep account, sharing, project, and board-switcher controls out of `src/lib/tasks/components/TaskBoard.svelte`
-- [ ] T027 [US7] Extend `src/routes/board.e2e.ts` with two pages in one browser context for AC-017 and AC-018: the second page shows a task saved by the first only after the second page reloads, and neither page offers sign-in
+- [x] T026 [US7] Set the `h1` to `Board` in `src/routes/+page.svelte` and keep account, sharing, project, and board-switcher controls out of `src/lib/tasks/components/TaskBoard.svelte`
+- [x] T027 [US7] Extend `src/routes/board.e2e.ts` with two pages in one browser context for AC-017 and AC-018: the second page shows a task saved by the first only after the second page reloads, and neither page offers sign-in
 
 **Checkpoint**: One shared browser board is visible and account controls are absent
 
@@ -125,17 +125,17 @@
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T028 [P] [US3] Add failing `updateTask` tests in `src/lib/tasks/domain.spec.ts` for AC-005 and AC-019: a known id replaces title, description, priority, and status; an unknown id leaves other tasks unchanged; duplicate titles stay distinct; a same-status edit keeps `placedAt`; a status change accepts a newer `placedAt`
-- [ ] T029 [P] [US3] Add failing edit tests in `src/lib/tasks/components/TaskForm.svelte.spec.ts` for AC-004 and AC-005: dialog name `Edit task` shows the stored description, Cancel does not call save, and a cleared title shows `Title is required`
+- [x] T028 [P] [US3] Add failing `updateTask` tests in `src/lib/tasks/domain.spec.ts` for AC-005 and AC-019: a known id replaces title, description, priority, and status; an unknown id leaves other tasks unchanged; duplicate titles stay distinct; a same-status edit keeps `placedAt`; a status change accepts a newer `placedAt`
+- [x] T029 [P] [US3] Add failing edit tests in `src/lib/tasks/components/TaskForm.svelte.spec.ts` for AC-004 and AC-005: dialog name `Edit task` shows the stored description, Cancel does not call save, and a cleared title shows `Title is required`
 
 ### Implementation for User Story 3
 
-- [ ] T030 [US3] Implement `updateTask` in `src/lib/tasks/domain.ts` with the same trimmed title limit of 1–200 and description limit of 0–5000 as create, returning the no-longer-available result for a missing id
-- [ ] T031 [US3] Add edit and cancel actions in `src/lib/tasks/board.svelte.ts` that discard the draft on cancel and commit an edit only after a successful save
-- [ ] T032 [P] [US3] Add an `Edit {title}` button to `src/lib/tasks/components/TaskCard.svelte`
-- [ ] T033 [P] [US3] Add the edit dialog path to `src/lib/tasks/components/TaskForm.svelte`, including the message `The task is no longer available`
-- [ ] T034 [US3] Wire edit open, save, and cancel through `src/routes/+page.svelte` without putting validation in the route
-- [ ] T035 [US3] Extend `src/routes/board.e2e.ts` for AC-004 and AC-005: opening a task shows its description, cancel keeps the old title after reload, and save keeps the new title after reload
+- [x] T030 [US3] Implement `updateTask` in `src/lib/tasks/domain.ts` with the same trimmed title limit of 1–200 and description limit of 0–5000 as create, returning the no-longer-available result for a missing id
+- [x] T031 [US3] Add edit and cancel actions in `src/lib/tasks/board.svelte.ts` that discard the draft on cancel and commit an edit only after a successful save
+- [x] T032 [P] [US3] Add an `Edit {title}` button to `src/lib/tasks/components/TaskCard.svelte`
+- [x] T033 [P] [US3] Add the edit dialog path to `src/lib/tasks/components/TaskForm.svelte`, including the message `The task is no longer available.`
+- [x] T034 [US3] Wire edit open, save, and cancel through `src/routes/+page.svelte` without putting validation in the route
+- [x] T035 [US3] Extend `src/routes/board.e2e.ts` for AC-004, AC-005, and AC-019: opening a task shows its description, cancel keeps the old title after reload, save keeps the new title after reload, and a same-status edit leaves that card in the same rendered position beside another card in the column
 
 **Checkpoint**: Edit and cancel are true for a seeded task without using create as the only setup
 
@@ -149,15 +149,15 @@
 
 ### Tests for User Story 4 ⚠️
 
-- [ ] T036 [P] [US4] Add failing `moveTask` tests in `src/lib/tasks/domain.spec.ts` for AC-006 and AC-019: another status changes only status and `placedAt`, the same status keeps `placedAt`, title, description, and priority stay unchanged, and column sort is `placedAt` descending then `id` ascending
-- [ ] T037 [P] [US4] Add a failing test in `src/lib/tasks/components/TaskCard.svelte.spec.ts` for a select named `Status for {title}` whose options are `To Do`, `In Progress`, and `Done`
+- [x] T036 [P] [US4] Add failing `moveTask` tests in `src/lib/tasks/domain.spec.ts` for AC-006 and AC-019: another status changes only status and `placedAt`, the same status keeps `placedAt`, title, description, and priority stay unchanged, and column sort is `placedAt` descending then `id` ascending
+- [x] T037 [P] [US4] Add a failing test in `src/lib/tasks/components/TaskCard.svelte.spec.ts` for a select named `Status for {title}` whose options are `To Do`, `In Progress`, and `Done`
 
 ### Implementation for User Story 4
 
-- [ ] T038 [US4] Implement `moveTask` in `src/lib/tasks/domain.ts` so a same-status choice changes no field and another status updates status only when the caller supplies the new `placedAt`
-- [ ] T039 [US4] Add the move action and monotonic `placedAt` helper to `src/lib/tasks/board.svelte.ts`, using a value at least one greater than the previous issued value
-- [ ] T040 [US4] Add the status select to `src/lib/tasks/components/TaskCard.svelte` and forward its change without calling storage in the component
-- [ ] T041 [US4] Extend `src/routes/board.e2e.ts` for AC-006: keyboard and pointer moves between visible columns, followed by a reload that still shows the destination column
+- [x] T038 [US4] Implement `moveTask` in `src/lib/tasks/domain.ts` so a same-status choice changes no field and another status updates status only when the caller supplies the new `placedAt`
+- [x] T039 [US4] Add the move action and monotonic `placedAt` helper to `src/lib/tasks/board.svelte.ts`, using a value at least one greater than the previous issued value
+- [x] T040 [US4] Add the status select to `src/lib/tasks/components/TaskCard.svelte` and forward its change without calling storage in the component
+- [x] T041 [US4] Extend `src/routes/board.e2e.ts` for AC-006 and AC-019: keyboard and pointer moves between visible columns, a reload still shows the destination column, two tasks in one column render newest first, and a status change renders that task first in the destination column
 
 **Checkpoint**: Moving a task changes its column and survives refresh
 
@@ -171,16 +171,16 @@
 
 ### Tests for User Story 5 ⚠️
 
-- [ ] T042 [P] [US5] Add failing tests in `src/lib/tasks/domain.spec.ts` for AC-007 and ES-004: `deleteTask` removes only the given id, a missing id changes nothing, and `filtersAfterDelete` returns all three statuses and priority `All` only when zero tasks remain
-- [ ] T043 [P] [US5] Add failing dialog tests in `src/lib/tasks/components/DeleteDialog.svelte.spec.ts` for a dialog that includes the task title and buttons `Confirm delete` and `Cancel`
+- [x] T042 [P] [US5] Add failing tests in `src/lib/tasks/domain.spec.ts` for AC-007 and ES-004: `deleteTask` removes only the given id, a missing id changes nothing, and `filtersAfterDelete` returns all three statuses and priority `All` only when zero tasks remain
+- [x] T043 [P] [US5] Add failing dialog tests in `src/lib/tasks/components/DeleteDialog.svelte.spec.ts` for a dialog that includes the task title and buttons `Confirm delete` and `Cancel`, and add a failing test in `src/lib/tasks/components/TaskBoard.svelte.spec.ts` that confirming deletion of an id that is no longer saved shows exactly `The task is no longer available.` and leaves every remaining task in place
 
 ### Implementation for User Story 5
 
-- [ ] T044 [US5] Implement `deleteTask` and `filtersAfterDelete` in `src/lib/tasks/domain.ts`
-- [ ] T045 [US5] Add delete confirmation state to `src/lib/tasks/board.svelte.ts` so Cancel and a missing id leave the committed tasks unchanged, and the last successful delete restores default filters
-- [ ] T046 [P] [US5] Implement the modal dialog in `src/lib/tasks/components/DeleteDialog.svelte`, closing on Cancel and Escape without a delete callback
-- [ ] T047 [US5] Add `Delete {title}` to `src/lib/tasks/components/TaskCard.svelte` and mount `src/lib/tasks/components/DeleteDialog.svelte` from `src/lib/tasks/components/TaskBoard.svelte`
-- [ ] T048 [US5] Extend `src/routes/board.e2e.ts` for AC-007: cancel keeps the task, confirm removes only that task after reload, and deleting the last stored task while another task is in a hidden status is deferred to T056; this task covers the last visible saved task showing `No tasks yet`
+- [x] T044 [US5] Implement `deleteTask` and `filtersAfterDelete` in `src/lib/tasks/domain.ts`
+- [x] T045 [US5] Add delete confirmation state to `src/lib/tasks/board.svelte.ts` so Cancel leaves the committed tasks unchanged, the last successful delete restores default filters, and confirming an id that is no longer saved leaves every remaining task unchanged and surfaces exactly `The task is no longer available.` for `src/lib/tasks/components/TaskBoard.svelte` to render
+- [x] T046 [P] [US5] Implement the modal dialog in `src/lib/tasks/components/DeleteDialog.svelte`, closing on Cancel and Escape without a delete callback
+- [x] T047 [US5] Add `Delete {title}` to `src/lib/tasks/components/TaskCard.svelte`, mount `src/lib/tasks/components/DeleteDialog.svelte` from `src/lib/tasks/components/TaskBoard.svelte`, and render exactly `The task is no longer available.` when confirmation targets a missing id
+- [x] T048 [US5] Extend `src/routes/board.e2e.ts` for AC-007 and ES-004: cancel keeps the task, confirm removes only that task after reload, and deleting the last saved task shows `No tasks yet` with all statuses selected and priority All. The separate case where another task remains in a hidden column is T056 and shows ES-002
 
 **Checkpoint**: Confirmed deletion survives refresh, and cancel does not delete
 
@@ -194,17 +194,17 @@
 
 ### Tests for User Story 6 ⚠️
 
-- [ ] T049 [P] [US6] Add failing filter tests in `src/lib/tasks/domain.spec.ts` for AC-003, AC-008, and AC-009: any status subset including none and all three stays in order `To Do`, `In Progress`, `Done`; priority `All` matches every priority; another priority matches only that value; filtering does not mutate stored tasks
-- [ ] T050 [P] [US6] Add failing tests in `src/lib/tasks/components/FilterBar.svelte.spec.ts` for a Status checkbox group named `To Do`, `In Progress`, and `Done`, a Priority radio group `All`, `Low`, `Medium`, and `High`, and a `Clear filters` button
+- [x] T049 [P] [US6] Add failing filter tests in `src/lib/tasks/domain.spec.ts` for AC-003, AC-008, and AC-009: any status subset including none and all three stays in order `To Do`, `In Progress`, `Done`; priority `All` matches every priority; another priority matches only that value; filtering does not mutate stored tasks
+- [x] T050 [P] [US6] Add failing tests in `src/lib/tasks/components/FilterBar.svelte.spec.ts` for a Status checkbox group named `To Do`, `In Progress`, and `Done`, a Priority radio group `All`, `Low`, `Medium`, and `High`, and a `Clear filters` button
 
 ### Implementation for User Story 6
 
-- [ ] T051 [US6] Implement visible-task filtering in `src/lib/tasks/domain.ts` so a card is included only when its status is selected and its priority matches the single priority choice
-- [ ] T052 [US6] Keep the active status combination and priority choice in `src/lib/tasks/board.svelte.ts` until the user changes them, clears them, or `init()` runs, and do not write filters to storage
-- [ ] T053 [P] [US6] Build `src/lib/tasks/components/FilterBar.svelte` with the checkbox group, radio group, and `Clear filters` button from `specs/001-task-kanban-board/contracts/board-ui.md`
-- [ ] T054 [US6] Hide unselected columns in `src/lib/tasks/components/TaskBoard.svelte`, show `No tasks` in a selected column with no matching card, and show `No statuses selected` with no columns when every status is unchecked
-- [ ] T055 [US6] Wire `src/lib/tasks/components/FilterBar.svelte` into `src/routes/+page.svelte` so the filters stay available for ES-001, ES-002, and ES-003
-- [ ] T056 [US6] Extend `src/routes/board.e2e.ts` for AC-003, AC-006, AC-008, AC-009, and ES-004: To Do plus Done with High hides In Progress, clear restores every task, unchecking every status shows `No statuses selected`, a move into an unselected status stays hidden until that status is checked, and deleting the last saved task checks all statuses and selects All
+- [x] T051 [US6] Implement visible-task filtering in `src/lib/tasks/domain.ts` so a card is included only when its status is selected and its priority matches the single priority choice
+- [x] T052 [US6] Keep the active status combination and priority choice in `src/lib/tasks/board.svelte.ts` until the user changes them, clears them, or `init()` runs, and do not write filters to storage
+- [x] T053 [P] [US6] Build `src/lib/tasks/components/FilterBar.svelte` with the checkbox group, radio group, and `Clear filters` button from `specs/001-task-kanban-board/contracts/board-ui.md`
+- [x] T054 [US6] Hide unselected columns in `src/lib/tasks/components/TaskBoard.svelte`, show `No tasks` in a selected column with no matching card, and show `No statuses selected` with no columns when every status is unchecked
+- [x] T055 [US6] Wire `src/lib/tasks/components/FilterBar.svelte` into `src/routes/+page.svelte` so the filters stay available for ES-001, ES-002, and ES-003
+- [x] T056 [US6] Extend `src/routes/board.e2e.ts` for AC-003, AC-006, AC-008, AC-009, ES-002, and ES-004 as separate assertions: To Do plus Done with High hides In Progress and clear restores every task; unchecking every status shows `No statuses selected`; a move into an unselected status stays hidden until that status is checked; with one status selected, deleting the only visible task while another task remains saved in a hidden column shows `No tasks` in the selected column (ES-002) and keeps the hidden task saved; separately, deleting the last saved task checks all statuses, selects priority All, and shows `No tasks yet` (ES-004); after at least one create, edit, move, or delete, the active status checkboxes and priority radio stay selected until clear or refresh
 
 **Checkpoint**: Multi-select status filtering and the single priority filter match the approved Q3 C decision
 
@@ -214,14 +214,14 @@
 
 **Purpose**: Keyboard, viewport, scale, focus, and the repository checks that apply to the whole board
 
-- [ ] T057 [P] Complete the AC-015 keyboard path in `src/routes/board.e2e.ts`: keyboard-only create, edit, move, status and priority filter changes, clear, and confirmed delete, with every contract name reachable by role
-- [ ] T058 Add the AC-016 viewport checks to `src/routes/board.e2e.ts` at 390×844 and 1280×800, reaching `To Do`, `In Progress`, and `Done` in that order and revealing a hidden column from the status filter
-- [ ] T059 [P] Add the SC-010 scale test for 100 tasks to `src/lib/tasks/domain.spec.ts`, asserting filter, move, edit, and delete still return the expected records
-- [ ] T060 [P] Update `src/routes/page.svelte.e2e.ts` so its heading assertion expects `Board`
-- [ ] T061 Return focus from `src/lib/tasks/components/TaskForm.svelte` and `src/lib/tasks/components/DeleteDialog.svelte` to the invoking control, or to `Create task` when that card is gone, as required by `specs/001-task-kanban-board/contracts/board-ui.md`
-- [ ] T062 Keep task title and description as text in `src/lib/tasks/components/TaskCard.svelte` and `src/lib/tasks/components/TaskForm.svelte`, and keep `src/lib/tasks/storage.ts` from logging task titles or descriptions
-- [ ] T063 Run `npm run check`, `npm run build`, `npm run test:unit -- --run`, and `npm run test:e2e` from `specs/001-task-kanban-board/quickstart.md` and record the command results
-- [ ] T064 [P] Confirm `package.json` and `package-lock.json` have no new dependency and that `tsconfig.json` still has `compilerOptions.strict` enabled
+- [x] T057 [P] Complete the AC-015 keyboard path in `src/routes/board.e2e.ts`: keyboard-only create, edit, move, status and priority filter changes, clear, and confirmed delete, with every contract name reachable by role
+- [x] T058 Add the AC-016 viewport checks to `src/routes/board.e2e.ts` at 390×844 and 1280×800, reaching `To Do`, `In Progress`, and `Done` in that order and revealing a hidden column from the status filter
+- [x] T059 Add the SC-010 scale coverage for 100 tasks required by `specs/001-task-kanban-board/plan.md`: `src/lib/tasks/domain.spec.ts` asserts filter, move, edit, and delete still return the expected records, and `src/routes/board.e2e.ts` seeds 100 tasks and verifies one create, one edit, one move, one delete, and one filter change
+- [x] T060 [P] Update `src/routes/page.svelte.e2e.ts` so its heading assertion expects `Board`
+- [x] T061 Return focus from `src/lib/tasks/components/TaskForm.svelte` and `src/lib/tasks/components/DeleteDialog.svelte` to the invoking control, or to `Create task` when that card is gone, as required by `specs/001-task-kanban-board/contracts/board-ui.md`
+- [x] T062 Keep task title and description as text in `src/lib/tasks/components/TaskCard.svelte` and `src/lib/tasks/components/TaskForm.svelte`, and keep `src/lib/tasks/storage.ts` from logging task titles or descriptions
+- [x] T063 Run `npm run check`, `npm run build`, `npm run test:unit -- --run`, and `npm run test:e2e` from `specs/001-task-kanban-board/quickstart.md` and record the command results
+- [x] T064 [P] Confirm `package.json` and `package-lock.json` have no new dependency and that `tsconfig.json` still has `compilerOptions.strict` enabled
 
 ---
 
@@ -235,8 +235,8 @@
 | AC-004 | T010, T014, T029, T033, T035 | US3 |
 | AC-005 | T028, T029, T030, T031, T035 | US3 |
 | AC-006 | T036, T037, T038, T040, T041, T056 | US6 for a hidden destination; US4 covers visible columns |
-| AC-007 | T042, T043, T044, T045, T048 | US5 |
-| AC-008 | T049, T050, T051, T052, T056 | US6 |
+| AC-007 | T042, T043, T044, T045, T048, T056 | US5 for confirm, cancel, and ES-004. US6 T056 for the hidden-column ES-002 case |
+| AC-008 | T049, T050, T051, T052, T056 | US6, including a mutation that leaves the active filters selected |
 | AC-009 | T049, T054, T056 | US6 |
 | AC-010 | T003, T018, T023 | US2 |
 | AC-011 | T023, T029, T031 | US2 for refresh; US3 for leaving an edit |
@@ -247,9 +247,9 @@
 | AC-016 | T015, T058 | Polish |
 | AC-017 | T024, T026, T027 | US7 |
 | AC-018 | T025, T027 | US7 |
-| AC-019 | T028, T036, T038, T039 | US4 |
+| AC-019 | T028, T035, T036, T038, T039, T041 | US3 for the rendered same-status position. US4 for newest-first and move-to-first on screen |
 
-SC-010 is T059. SC-009, the moderated 90 percent first-use check, has no automated task because the spec keeps it outside Vitest and Playwright.
+SC-010 is T059, with both the domain test and the Playwright seed of 100 tasks. SC-009, the moderated 90 percent first-use check, has no automated task because the spec keeps it outside Vitest and Playwright.
 
 ## Dependencies & Execution Order
 
@@ -291,7 +291,7 @@ SC-010 is T059. SC-009, the moderated 90 percent first-use check, has no automat
 - T046 can run beside T045
 - T049 and T050 can run together
 - T053 can run beside T052
-- T057, T059, T060, and T064 can run together
+- T057, T060, and T064 can run together. T059 edits `src/routes/board.e2e.ts` after T057 and T058 because those tasks share that file
 - After Foundational, T025 can proceed beside User Story 1. User Stories 3, 4, and 5 can proceed beside one another when each person keeps to that story's component file. Shared files such as `domain.ts`, `board.svelte.ts`, `+page.svelte`, and `board.e2e.ts` stay sequential.
 
 ---
